@@ -1,0 +1,527 @@
+<%- contentFor('HeaderCss') %>
+<link href="public/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+<link href="public/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css">
+<link href="public/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
+<link href="public/assets/libs/spectrum-colorpicker2/spectrum.min.css" rel="stylesheet" type="text/css">
+<link href="public/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet">
+<%- contentFor('breadcrumb') %>
+
+<%- contentFor('body') %>
+<style>
+    .imageThumb {
+  max-height: 75px;
+  border: 2px solid;
+  padding: 1px;
+  cursor: pointer;
+}
+.pip {
+  display: inline-block;
+  margin: 10px 10px 0 0;
+}
+.remove {
+  display: block;
+  background: rgb(206, 17, 17);
+  border: 1px solid black;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+}
+.remove:hover {
+  background: white;
+  color: black;
+}
+</style>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div id="alertmsg"></div>
+                    <form method="post" class="needs-validation" id="addproduct" enctype="multipart/form-data" novalidate>
+                        <div class="row mb-3">
+                            <label for="example-text-input" class="col-sm-2 col-form-label">Product Types <span style="color: red;">*</span></label>
+                            <div class="col-sm-3">
+                                <select class="form-select" aria-label="Default select example" id="producttypeId" name="producttypeId" required>
+                                    <option value="">Select Type</option>
+                                    <% if(poducttype.length){  
+                                        for(var i = 0;i < poducttype.length;i++) {
+                                            
+                                                
+                                            %>
+                                    <option value="<%=poducttype[i].id%>"><%=poducttype[i].name%></option>
+                                   
+                                    <% } } %>
+                                    </select>
+                            </div>
+                            <label for="example-text-input" class="col-sm-2 col-form-label">Category Name <span style="color: red;">*</span></label>
+                            <div class="col-sm-3">
+                                <select class="form-select" aria-label="Default select example" id="categoryId" name="categoryId" required>
+                                    <option value="">Select Category</option>
+                                    <% if(categoryname.length){  
+                                        for(var i = 0;i < categoryname.length;i++) {
+                                            %>
+                                    <option value="<%=categoryname[i].id%>"><%=categoryname[i].name%></option>
+                                    <% } } %>
+                                    </select>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <label for="example-text-input" class="col-sm-2 col-form-label">Product Name <span style="color: red;">*</span></label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text"  id="product_name" name="product_name" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="example-text-input" class="col-sm-2 col-form-label">Meta Keyword <span style="color: red;">*</span></label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text"  id="txt_addproductkeyword" name="txt_addproductkeyword"  required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="example-text-input" class="col-sm-2 col-form-label">Meta Description <span style="color: red;">*</span></label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text"  id="meta_description" name="meta_description" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="example-text-input" class="col-sm-2 col-form-label">Related Products <span style="color: red;">*</span></label>
+                            <div class="col-sm-9">
+                               
+                                    <select class="select2 form-control select2-multiple" id="rel_porducts" name="rel_porducts[]"  multiple="multiple" multiple data-placeholder="Choose ...">
+                                        <optgroup>
+                                            <% if(productdata.length){  
+                                                for(var i = 0;i < productdata.length;i++) {
+                                                    %>
+                                            <option value="<%=productdata[i].id%>"><%=productdata[i].product_name%></option>
+                                            <% } } %>
+                                        </optgroup>
+                                        
+                                        
+                                    </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="example-text-input" class="col-sm-2 col-form-label">Included Products <span style="color: red;">*</span></label>
+                            <div class="col-sm-9">
+                                
+                                    <select class="select2 form-control select2-multiple" id="included_prod" name="included_prod[]"  multiple="multiple" multiple data-placeholder="Choose ...">
+                                        <optgroup>
+                                            <% if(productdata.length){  
+                                                for(var i = 0;i < productdata.length;i++) {
+                                                    %>
+                                            <option value="<%=productdata[i].id%>"><%=productdata[i].product_name%></option>
+                                            <% } } %>
+                                        </optgroup>
+                                        
+                                        
+                                    </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="example-text-input" class="col-sm-2 col-form-label">Products Selection<span style="color: red;">*</span></label>
+                            <div class="col-sm-9">
+                                
+                                    <select class="select2 form-control select2-multiple" id="product_section" name="product_section[]"  multiple="multiple" multiple data-placeholder="Choose ...">
+                                        <optgroup>
+                                            <% if(productsection.length){  
+                                                for(var i = 0;i < productsection.length;i++) {
+                                                    %>
+                                            <option value="<%=productsection[i].id%>"><%=productsection[i].product_name%></option>
+                                            <% } } %>
+                                        </optgroup>
+                                        
+                                        
+                                    </select>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="row mb-3">
+                            <label for="example-text-input" class="col-sm-2 col-form-label">Discount Code </label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text"  id="discount_code" name="discount_code">
+                            </div>
+                        </div>
+                        <div class="row mb-12">
+                            <label for="example-text-input" class="col-sm-2 col-form-label">Product Description
+                            </label>
+                            </div>
+                            <div class="col-sm-11">
+                                <textarea name="p_description" id="p_description"></textarea>                            
+                            </div>
+                            <div class="row mb-3">
+                        <div class="row mb-12">
+                            <label for="example-text-input" class="col-sm-2 col-form-label">Sort Description
+                            </label></div>
+                            <div class="col-sm-11">
+                                <textarea name="sort_desc" class="form-control" id="sort_desc"></textarea>                            
+                            </div>
+                     </div>
+                      
+                     <div class="row mb-3">
+                        <div class="row mb-12">
+                            <label for="example-text-input" class="col-sm-2 col-form-label">Curriculum Description
+                            </label></div>
+                            <div class="col-sm-11">
+                                <textarea name="curriculum_desc" class="form-control" id="curriculum_desc"></textarea>                            
+                            </div>
+                     </div>
+                        <div class="row mb-3">
+                            <label for="example-text-input" class="col-sm-2 col-form-label">Order </label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="number" min="0"  id="ord" name="ord">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            
+                            <label for="example-text-input" class="col-sm-2 col-form-label">Lable</label>
+                            <div class="col-sm-3">
+                                <select class="form-select"  aria-label="Default select example" id="tab_options" name="tab_options">
+                                    <option value="1">Best</option>
+                                    <option value="2">Batter</option>
+                                    <option value="3">Good</option>
+
+                                    </select>
+                            </div>
+                             <label for="example-text-input" class="col-sm-2 col-form-label">Show Product To: <span style="color: red;">*</span></label>
+                            <div class="col-sm-3">
+                                <select class="form-select" aria-label="Default select example" id="isShow" name="isShow">
+                                    <option selected="0" value="0">Select All</option>
+                                    <% if(admindata.length){  
+                                        for(var i = 0;i < admindata.length;i++) {
+                                            
+                                                
+                                            %>
+                                    <option value="<%=admindata[i].id%>"><%=admindata[i].username%></option>
+                                   
+                                    <% } } %>
+                                    </select>
+                                    
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="example-text-input" class="col-sm-2 col-form-label">No of Buyers <span style="color: red;">*</span></label>
+                            <div class="col-sm-3">
+                                <input class="form-control" type="number"  id="custom_buyer" name="custom_buyer" required>
+                            </div>
+                            <label for="example-text-input" class="col-sm-2 col-form-label">Product Price <span style="color: red;">*</span></label>
+                            <div class="col-sm-3">
+                                <input class="form-control" type="text"  id="p_price" name="p_price" required>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <label for="example-text-input" class="col-sm-2 col-form-label">Banner Image
+                            </label>
+                            <div class="col-sm-9">
+                                <img src="" id="banner_imgdisplay" style="display: none;" width="100px" height="100px" alt="Red dot" />
+                                <input type="hidden" id="banner_img" name="banner_img">
+                                <input  class="form-control" onchange="encodeImageFileAsURL(this,'banner_imgdisplay','banner_img')" type="file" >  
+                               
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="example-text-input" class="col-sm-2 col-form-label">Manual Attachment
+                            </label>
+                            <div class="col-sm-9">
+                                <img src="" id="product_certificatedisplay1" style="display: none;" width="100px" height="100px" alt="Red dot" />
+                                <input type="hidden" id="manual_attachment" name="manual_attachment">
+
+                                <input   class="form-control"  onchange="encodeImageFileAsURL(this,'product_certificatedisplay1','manual_attachment')" type="file" >  
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="example-text-input" class="col-sm-2 col-form-label">Product Certificate
+                            </label>
+                            <div class="col-sm-9">
+                                <img src="" id="product_certificatedisplay" style="display: none;" width="100px" height="100px" alt="Red dot" />
+                                <input type="hidden" id="product_certificate" name="product_certificate">
+
+                                <input   class="form-control"  onchange="encodeImageFileAsURL(this,'product_certificatedisplay','product_certificate')" type="file" >  
+                           
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="example-text-input" class="col-sm-2 col-form-label">Product Image
+                            </label>
+                            <div class="col-sm-9">
+                            <div id="dvPreview">
+                            </div> 
+                           
+                            <input id="productsimage" class="form-control" type="file" multiple="multiple" />
+                           
+                         
+                            </div>  
+                            </div>
+                       
+                        <div class="row mb-3">
+                            <label for="example-text-input" class="col-sm-2 col-form-label">key Features
+                            </label>
+                            <div class="col-sm-9">
+                            <input id="key" type="button" class="btn btn-success" value="Add key Features" />  
+                            <div id="TextBoxkey" style="margin-top: 1%;">  
+                            </div>  
+                            </div>
+                        </div>
+                            <div class="row mb-3">
+                                <label for="example-text-input" class="col-sm-2 col-form-label">Add Skilles
+                                </label>
+                                <div class="col-sm-9">
+                                <input id="skilles" type="button" class="btn btn-success" value="Add Skilles" />  
+                                <div id="TextBoxskilles" style="margin-top: 1%;">  
+                                </div>  
+            
+                            </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">Add Certificate
+                                    </label>
+                                    <div class="col-sm-9">
+                                    <input id="exam" type="button" class="btn btn-success" value="Add Certificate" />  
+                                    <div id="TextBoxexam" style="margin-top: 1%;">  
+                                    </div>  
+                                </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="example-text-input" class="col-sm-2 col-form-label">Add Faq
+                                        </label>
+                                        <div class="col-sm-9">
+                                        <input id="faq" type="button" class="btn btn-success" value="Add faq" />  
+                                        <div id="TextBoxfaq" style="margin-top: 1%;">  
+                                        </div>  
+                                    </div>
+                                    
+                                        </div>
+                                    <div class="row mb-3">
+                                        <label for="example-text-input" class="col-sm-2 col-form-label">Add curriculum
+                                        </label>
+                                        <div class="col-sm-9">
+                                        <input id="topic" type="button" class="btn btn-success" value="Add curriculum" />  
+
+                                        <div id="TextBoxtopic" style="margin-top: 1%;">  
+                                            
+                                        </div>  
+                                        
+                                    </div>
+                                    </div>
+                                    
+                                    <div class="row mb-3">
+                                       
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="example-text-input" class="col-sm-2 col-form-label">Front InVisible
+                                        </label>
+                                        <div class="col-sm-3" style="margin-top:7px;">
+                                            <input  type="checkbox"  name="front_invisible" id="front_invisible" value="1">                            
+                                        </div>
+                                        <label for="example-text-input" class="col-sm-2 col-form-label">Popular Product
+                                        </label>
+                                        <div class="col-sm-3" style="margin-top:7px;">
+                                            <input  type="checkbox"  name="p_similar" id="p_similar" value="1">                            
+                                        </div>
+                                   
+                                </div>
+                    <div class="row mb-3">
+                        <div>
+                            <button type="button" onclick="addproduct()" class="btn btn-primary waves-effect waves-light me-1">
+                                Submit
+                            </button>
+                            <a href="/products"><button type="button" href="/productscategory" class="btn btn-secondary waves-effect">
+                                Back
+                            </button></a>
+                        </div>
+                    </div>
+                   </form>
+                    
+                </div>
+            </div>
+        </div> <!-- end col -->
+    </div> <!-- end row -->
+    <script src="public/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <!-- Sweet alert init js-->
+    <script src="public/assets/js/pages/sweet-alerts.init.js"></script>
+<script>
+
+  function addproduct(){
+var pname=$('#product_name').val();
+var categoryId=$('#categoryId').val();
+var producttypeId=$('#producttypeId').val();
+var txt_addproductkeyword=$('#txt_addproductkeyword').val();
+var meta_description=$('#meta_description').val();
+var custom_buyer=$('#custom_buyer').val();
+var rel_porducts=$('#rel_porducts').val();
+var included_prod=$('#included_prod').val();
+var product_section=$('#product_section').val();
+var p_price=$('#p_price').val();
+var custom_buyer=$('#custom_buyer').val();
+if(!product_section ||  !p_price ||  !custom_buyer ||  !pname || !categoryId || !producttypeId || !txt_addproductkeyword || !meta_description || !custom_buyer || !rel_porducts || !included_prod)
+{
+    $(window).scrollTop(0);
+    document.getElementById('alertmsg').innerHTML='<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong>All Marking Fields Required .<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+    return false;
+}
+var frm = $('#addproduct').serialize();
+$.ajax({
+type: 'POST',
+dataType : 'json',
+url: '<%=urlapi%>addproducts',
+data: frm,
+
+success: function (data) {
+    if(data.status == 'danger')
+    {
+        document.getElementById('alertmsg').innerHTML='<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong> '+data.message+'<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+    }
+    else{
+        document.getElementById('alertmsg').innerHTML='<div class="alert alert-'+data.status+' alert-dismissible fade show" role="alert"><strong>'+data.status+'!</strong> '+data.message+'<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+    }
+    $(window).scrollTop(0);
+
+
+},
+error: function(request, status, error) {
+    var string = request.responseJSON.message.split(",");
+    document.getElementById('alertmsg').innerHTML='<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Failed!</strong> '+string[0]+'.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>'
+}
+});
+}
+
+  function encodeImageFileAsURL(element,id,idj) {
+      
+                            var file = element.files[0];
+                            var img = new Image();
+                            
+                            var reader = new FileReader();
+                            reader.onloadend = function() {
+                                //document.getElementById('image').value=reader.result;
+                              console.log('RESULT', reader.result)
+                              document.getElementById(id).src=reader.result;
+                              if(id !='product_certificatedisplay1')
+                              {
+                                document.getElementById(id).style.display='block';
+
+                              }
+                              document.getElementById(idj).value=reader.result;
+                          
+                            }
+                            reader.readAsDataURL(file);
+                          }
+                          $("#productsimage").on("change", function(e) {
+      var files = e.target.files,
+        filesLength = files.length;
+      for (var i = 0; i < filesLength; i++) {
+        var f = files[i]
+        var fileReader = new FileReader();
+        fileReader.onload = (function(e) {
+          var file = e.target;
+          $("<span class=\"pip\">" +
+            "<input type='hidden' id='products_image' name='products_image[]' value='"+e.target.result+"'><img height='100px;' width= '100px' class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
+            "<br/><span class=\"remove\">Remove image</span>" +
+            "</span>").insertAfter("#dvPreview");
+          $(".remove").click(function(){
+            $(this).parent(".pip").remove();
+          });
+          
+         
+          
+        });
+        fileReader.readAsDataURL(f);
+      }
+      console.log(files);
+    });                    
+ 
+
+
+    
+</script>
+<script  src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>  
+<script type="text/javascript">  
+$(function () {  
+    $("#key").bind("click", function () {  
+        var div = $("<div />");  
+        div.html(GenerateTextkeybox(""));  
+        $("#TextBoxkey").append(div);  
+    });  
+    
+    $("body").on("click", ".remove", function () {  
+        $(this).closest("div").remove();  
+    });  
+});  
+$(function () {  
+    $("#skilles").bind("click", function () {  
+        var div = $("<div />");  
+        div.html(GenerateTextskillesbox(""));  
+        $("#TextBoxskilles").append(div);  
+    });  
+    $("#topic").bind("click", function () {  
+        var div = $("<div />");  
+        div.html(GenerateTexttopicbox(""));  
+        $("#TextBoxtopic").append(div);  
+    });  
+    $("#subtopic").bind("click", function () {  
+        var div = $("<div />");  
+        div.html(GenerateTextsubtopicbox(""));  
+        $("#TextBoxsubtopic").append(div);  
+    });
+    $("#exam").bind("click", function () {  
+        var div = $("<div />");  
+        div.html(GenerateTextexambox(""));  
+        $("#TextBoxexam").append(div);  
+    }); 
+    $("#faq").bind("click", function () {  
+        var div = $("<div />");  
+        div.html(GenerateTextfaqbox(""));  
+        $("#TextBoxfaq").append(div);  
+    }); 
+    $("body").on("click", ".remove", function () {  
+        $(this).closest("div").remove();  
+    });  
+}); 
+function GenerateTextkeybox(value) {  
+    return '<input name = "key[]" style="margin-top: 1%;width:80%;float:left" class="form-control" required type="text" value = "' + value + '" /> ' +  
+            '<input type="button" value="Remove" style="margin-top: 1%;margin-left: 1%;float:left" class="remove btn btn-danger" />'  
+} 
+function GenerateTextskillesbox(value) {  
+    return '<input name = "skilles[]" style="margin-top: 1%;width:80%;float:left" class="form-control" required type="text" value = "' + value + '" /> ' +  
+            '<input type="button" value="Remove"  style="margin-top: 1%;margin-left: 1%;float:left" class="remove btn btn-danger" />'  
+}   
+function GenerateTexttopicbox(value) {  
+    return '<input name = "topic[]" style="margin-top: 1%;width:80%;float:left" placeholder="title" class="form-control" required type="text" value = "' + value + '" /><input name = "subtopic[]" placeholder="subtitle" style="margin-top: 1%;width:80%;float:left" class="form-control" required type="text" value = "' + value + '" /> ' +  
+    '<div id="TextBoxsubtopic" style="margin-top: 1%;"></div><input type="button" value="Remove"  style="margin-top: 1%;margin-left: 1%;float:left" class="remove btn btn-danger" />'
+    
+} 
+function GenerateTextsubtopicbox(value) {  
+    return '<input name = "subtopic[]" style="margin-top: 1%;width:80%;float:left" class="form-control" required type="text" value = "' + value + '" /> ' +  
+            '<input type="button" value="Remove"  style="margin-top: 1%;margin-left: 1%;float:left" class="remove btn btn-danger" />'  
+} 
+function GenerateTextexambox(value) { 
+    return '<input name = "examque[]" placeholder="question" style="margin-top: 1%;width:80%;float:left" required class="form-control" type="text" value = "' + value + '" /><textarea name = "examans[]" style="margin-top: 1%;width:80%;float:left" class="form-control" type="text" value = "' + value + '" required /> </textarea>' +  
+            '<input type="button" value="Remove" placeholder="answer" style="margin-top: 1%;margin-left: 1%;float:left" class="remove btn btn-danger" />'  
+}   
+function GenerateTextfaqbox(value) { 
+    return '<input name = "faqque[]" placeholder="question" style="margin-top: 1%;width:80%;float:left" required class="form-control" type="text" value = "' + value + '" /><textarea name = "faqans[]" style="margin-top: 1%;width:80%;float:left" class="form-control" type="text" value = "' + value + '" required /> </textarea>' +  
+            '<input type="button" value="Remove" placeholder="answer" style="margin-top: 1%;margin-left: 1%;float:left" class="remove btn btn-danger" />'  
+} 
+</script> 
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script>
+
+<!-- Initialize the editor. -->
+<script>
+
+  new FroalaEditor('#p_description');
+</script>
+<%- contentFor('FooterJs') %>
+<link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+<script src="public/assets/libs/select2/js/select2.min.js"></script>
+<script src="public/assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="public/assets/libs/spectrum-colorpicker2/spectrum.min.js"></script>
+<script src="public/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+<script src="public/assets/libs/admin-resources/bootstrap-filestyle/bootstrap-filestyle.min.js"></script>
+<script src="public/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+
+<script src="public/assets/js/pages/form-advanced.init.js"></script>
+<script src="public/assets/libs/parsleyjs/parsley.min.js"></script>
+
+<script src="public/assets/js/pages/form-validation.init.js"></script>
+<%- contentFor('BottomJs') %>

@@ -55,8 +55,7 @@
                                 <div class="row mb-3">
                                     <label class="col-form-label col-sm-2">Releted Products</label>
                                     <div class="col-sm-10">
-                                        <select class="select2 form-control select2-multiple" multiple="multiple" name="relatedProduct"
-                                            multiple data-placeholder="Choose ...">
+                                        <select class="select2 form-control select2-multiple" multiple="multiple" name="relatedProduct" multiple data-placeholder="Choose ...">
                                             <option value="AK">Alaska</option>
                                             <option value="HI">Hawaii</option>
                                             <option value="CA">California</option>
@@ -109,8 +108,7 @@
                                 </div>
                                 <div class="mb-0">
                                     <div>
-                                        <button type="submit" id="save"
-                                            class="btn btn-primary waves-effect waves-light me-1">
+                                        <button type="submit" id="save" class="btn btn-primary waves-effect waves-light me-1">
                                             Submit
                                         </button>
                                         <button type="reset" class="btn btn-secondary waves-effect">
@@ -118,69 +116,68 @@
                                         </button>
                                     </div>
                             </form>
+                            </div>
                         </div>
                     </div>
-                </div> <!-- end col -->
-            </div> <!-- end row -->
+                    <!-- end col -->
+                </div>
+                <!-- end row -->
 
-            <%- contentFor('FooterJs') %>
-                <script src="public/assets/libs/select2/js/select2.min.js"></script>
-                <script src="public/assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-                <script src="public/assets/libs/spectrum-colorpicker2/spectrum.min.js"></script>
-                <script src="public/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
-                <script
-                    src="public/assets/libs/admin-resources/bootstrap-filestyle/bootstrap-filestyle.min.js"></script>
-                <script src="public/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+                <%- contentFor('FooterJs') %>
+                    <script src="public/assets/libs/select2/js/select2.min.js"></script>
+                    <script src="public/assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+                    <script src="public/assets/libs/spectrum-colorpicker2/spectrum.min.js"></script>
+                    <script src="public/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+                    <script src="public/assets/libs/admin-resources/bootstrap-filestyle/bootstrap-filestyle.min.js"></script>
+                    <script src="public/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
 
-                <script src="public/assets/js/pages/form-advanced.init.js"></script>
-                <!--tinymce js-->
-                <script src="public/assets/libs/tinymce/tinymce.min.js"></script>
+                    <script src="public/assets/js/pages/form-advanced.init.js"></script>
+                    <!--tinymce js-->
+                    <script src="public/assets/libs/tinymce/tinymce.min.js"></script>
 
-                <!-- init js -->
-                <script src="public/assets/js/pages/form-editor.init.js"></script>
+                    <!-- init js -->
+                    <script src="public/assets/js/pages/form-editor.init.js"></script>
 
-                <%- contentFor('BottomJs') %>
-                    <!-- <script>
-                            document.getElementsByClassName("tox-statusbar__branding")[0].firstElementChild.innerText = '';
-                    </script> -->
-                    <script type="text/javascript">
-                        // add row
-                        $("#addRow").click(function () {
-                            var html = '';
-                            html += '<div id="inputFormRow">';
-                            html += '<div class="input-group mb-3">';
-                            html += '<input type="text" name="keyFeture" class="form-control m-input" placeholder="Enter title" autocomplete="off">';
-                            html += '<div class="input-group-append">';
-                            html += '<button id="removeRow" type="button" class="btn btn-danger">Remove</button>';
-                            html += '</div>';
-                            html += '</div>';
-                            $('#newRow').append(html);
-                        });
-                    
-                        // remove row
-                        $(document).on('click', '#removeRow', function () {
-                            $(this).closest('#inputFormRow').remove();
-                        });
-                    </script>
+                    <%- contentFor('BottomJs') %>
+                        <script type="text/javascript">
+                            // add row
+                            $("#addRow").click(function() {
+                                var html = '';
+                                html += '<div id="inputFormRow">';
+                                html += '<div class="input-group mb-3">';
+                                html += '<input type="text" name="keyFeture" class="form-control m-input" placeholder="Enter title" autocomplete="off">';
+                                html += '<div class="input-group-append">';
+                                html += '<button id="removeRow" type="button" class="btn btn-danger">Remove</button>';
+                                html += '</div>';
+                                html += '</div>';
+                                $('#newRow').append(html);
+                            });
 
-                    <!-- AJAX api call  -->
+                            // remove row
+                            $(document).on('click', '#removeRow', function() {
+                                $(this).closest('#inputFormRow').remove();
+                            });
+                        </script>
 
-                    <script>
-                        $(document).ready(function () {
-                            $("#save").click(function (e) {
-                                e.preventDefault();
-                                // var form = $('#myForm');
-                                var obj = $("#elm1").val();
-                                // var obj = form.serialize();
-                                // obj.data = '';
-                                // obj.name = '';
-                                $.ajax({
-                                    url: "http://localhost:3000/api/product/add",
-                                    method: "post",
-                                    data: {decs:obj},
-                                    success: function (data) {
-                                    }
+                        <!-- AJAX api call  -->
+
+                        <script>
+                            $(document).ready(function() {
+                                $("#save").click(function(e) {
+                                    e.preventDefault();
+                                    // var form = $('#myForm');
+                                    var obj = $("#elm1").val();
+                                    // var obj = form.serialize();
+                                    // obj.data = '';
+                                    // obj.name = '';
+                                    $.ajax({
+                                        url: "http://localhost:3000/api/product/add",
+                                        method: "post",
+                                        data: {
+                                            decs: obj
+                                        },
+                                        success: function(data) {}
+                                    })
                                 })
                             })
-                        })
-                    </script>
+                        </script>
